@@ -19,7 +19,7 @@ app.post('/users', (req, res) => {
 	res.status(201);
 	res.send({"id": id, "name": user, "email": email});
 	while(typeof users[id] !== 'undefined') {
-		id = id + 1;
+		id = id + 1; //limits size of array to number of users, when item in array is deleted, the id is set to that location, could be bad if a bunch of deletes occur like 0,1,2,3,...
 	}
 });
 
@@ -54,8 +54,7 @@ app.delete('/users/:ID', (req, res) => {
 	}
 	else {
 		res.status(204);
-		id = req.params.ID;
-		users.splice(req.params.ID, 1);
+		users[req.params.ID] = undefined; //removes the item
 		res.send();
 	}
 
